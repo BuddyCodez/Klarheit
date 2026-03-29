@@ -1,0 +1,22 @@
+model Transaction {
+  id          String            @id @default(uuid())
+  amount      Float
+  currency    String
+  country     String
+  timestamp   DateTime
+  senderId    String
+  receiverId  String
+  status      TransactionStatus @default(PENDING)
+  alert       Alert?
+
+  createdAt   DateTime @default(now())
+
+  @@index([senderId, timestamp])
+  @@map("transaction")
+}
+
+enum TransactionStatus {
+  PENDING
+  VERIFIED
+  FLAGGED
+}
