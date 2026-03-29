@@ -42,14 +42,9 @@ export default function UserMenu() {
           <DropdownMenuItem>{session.user.email}</DropdownMenuItem>
           <DropdownMenuItem
             variant="destructive"
-            onClick={() => {
-              authClient.signOut({
-                fetchOptions: {
-                  onSuccess: () => {
-                    router.push("/");
-                  },
-                },
-              });
+            onClick={async () => {
+              await authClient.signOut();
+              window.location.href = "/";
             }}
           >
             Sign Out

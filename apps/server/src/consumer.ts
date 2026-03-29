@@ -1,6 +1,7 @@
 import { Kafka } from "kafkajs";
 import amqp from "amqplib";
-// import { db } from "@Klarheit/db"; // we'll integrate Prisma shortly
+import db from "@Klarheit/db";
+import { io } from "./socket";
 
 const KAFKA_BROKERS = process.env.KAFKA_BROKERS || "localhost:9092";
 const RABBITMQ_URL = process.env.RABBITMQ_URL || "amqp://localhost:5672";
@@ -55,6 +56,36 @@ export async function startKafkaConsumer() {
             // Update location cache
             userLastLocation.set(tx.sender_id, { country: tx.country, timestamp: txTime });
 
+            // Save transaction to DB
+            try {
+                await db.transaction.create({
+                    data: {
+                        id: tx.tx_id,
+                        amount: tx.amount,
+                        currency: tx.currency,
+                        country: tx.country,
+                        timestamp: txTime,
+                        senderId: tx.sender_id,
+                        receiverId: tx.receiver_id,
+                        status: txStatus as any,
+                    }
+                });
+
+                // Emit to Socket.io clients
+                io.emit("new-transaction", {
+                    id: tx.tx_id,
+                    amount: tx.amount,
+                    currency: tx.currency,
+                    country: tx.country,
+                    timestamp: txTime.toISOString(),
+                    senderId: tx.sender_id,
+                    receiverId: tx.receiver_id,
+                    status: txStatus,
+                });
+            } catch (err) {
+                console.error("Failed to save transaction to DB:", err);
+            }
+
             if (txStatus === "FLAGGED") {
                 console.log(`[ALERT] Transaction ${tx.tx_id} flagged: ${ruleTriggered}`);
                 // Push to RabbitMQ
@@ -65,7 +96,6 @@ export async function startKafkaConsumer() {
                 channel.sendToQueue(queue, Buffer.from(JSON.stringify(alertPayload)), { persistent: true });
             } else {
                 console.log(`[OK] Transaction ${tx.tx_id} verified.`);
-                // Note: Prisma integration will be added here to save verified transactions to the DB
             }
         },
     });

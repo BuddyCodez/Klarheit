@@ -12,6 +12,7 @@ import { Elysia } from "elysia";
 
 import { startAlertWorker } from "./alert-worker";
 import { startKafkaConsumer } from "./consumer";
+import { setupSocket } from "./socket";
 
 const rpcHandler = new RPCHandler(appRouter, {
   interceptors: [
@@ -36,7 +37,7 @@ const apiHandler = new OpenAPIHandler(appRouter, {
 const app = new Elysia()
   .use(
     cors({
-      origin: env.CORS_ORIGIN,
+      origin: true,
       methods: ["GET", "POST", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true,
@@ -81,3 +82,5 @@ const app = new Elysia()
     startKafkaConsumer().catch(console.error);
     startAlertWorker().catch(console.error);
   });
+
+setupSocket();

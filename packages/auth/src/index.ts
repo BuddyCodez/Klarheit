@@ -24,6 +24,15 @@ export function createAuth() {
         httpOnly: true,
       },
     },
+    user: {
+      additionalFields: {
+        role: {
+          type: "string",
+          required: false,
+          defaultValue: "AUDITOR",
+        },
+      },
+    },
     plugins: [],
   });
 }

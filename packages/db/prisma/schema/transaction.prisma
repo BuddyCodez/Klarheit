@@ -19,4 +19,5 @@ enum TransactionStatus {
   PENDING
   VERIFIED
   FLAGGED
+  REJECTED
 }

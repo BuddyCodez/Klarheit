@@ -18,7 +18,7 @@ export const web = await Nextjs("web", {
   },
   dev: {
     env: {
-      PORT: "3001",
+      PORT: "3002",
     },
   },
 });

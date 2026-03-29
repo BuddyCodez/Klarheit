@@ -1,0 +1,11 @@
+model SystemRule {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  active      Boolean  @default(true)
+  config      Json?    // Stores thresholds (e.g. { threshold: 10000 })
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("system_rule")
+}

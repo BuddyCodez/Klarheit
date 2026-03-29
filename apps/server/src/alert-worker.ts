@@ -1,5 +1,6 @@
 import amqp from "amqplib";
-// import { db } from "@Klarheit/db"; // we'll integrate Prisma shortly
+import db from "@Klarheit/db";
+import { io } from "./socket";
 
 const RABBITMQ_URL = process.env.RABBITMQ_URL || "amqp://localhost:5672";
 
@@ -21,18 +22,24 @@ export async function startAlertWorker() {
                 const payload = JSON.parse(msg.content.toString());
                 console.log(`[WORKER] Processing Fraud Alert for TX: ${payload.transaction.tx_id}`);
 
-                // Note: Prisma integration will be added here to save the alert into Postgres.
+                try {
+                    await db.alert.create({
+                        data: {
+                            transactionId: payload.transaction.tx_id,
+                            ruleTriggered: payload.rule_triggered,
+                            status: "PENDING"
+                        }
+                    });
+                } catch (err) {
+                    console.error("Failed to save alert to DB:", err);
+                }
 
-                // Example:
-                // await db.alert.create({
-                //   data: {
-                //     transaction_id: payload.transaction.tx_id,
-                //     rule_triggered: payload.rule_triggered,
-                //     status: "PENDING"
-                //   }
-                // });
-
-                // TODO: Emit to frontend via Socket.io to push real-time alerts
+                // Emit to frontend via Socket.io to push real-time alerts
+                io.emit("fraud-alert", {
+                    transactionId: payload.transaction.tx_id,
+                    ruleTriggered: payload.rule_triggered,
+                    status: "PENDING"
+                });
 
                 // Acknowledge the message so it's removed from the queue
                 channel.ack(msg);
