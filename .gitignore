@@ -49,3 +49,9 @@ coverage
 .cache
 tmp
 temp
+
+# Agent Skills
+skills-lock.json
+skills.json
+./agents/*
+./claude/* 
