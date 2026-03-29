@@ -1,0 +1,24 @@
+{
+  "name": "@Klarheit/auth",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@Klarheit/db": "workspace:*",
+    "@Klarheit/env": "workspace:*",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@Klarheit/config": "workspace:*",
+    "typescript": "^5"
+  }
+}

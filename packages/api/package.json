@@ -1,0 +1,29 @@
+{
+  "name": "@Klarheit/api",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@Klarheit/auth": "workspace:*",
+    "@Klarheit/db": "workspace:*",
+    "@Klarheit/env": "workspace:*",
+    "@orpc/client": "catalog:",
+    "@orpc/openapi": "catalog:",
+    "@orpc/server": "catalog:",
+    "@orpc/zod": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@Klarheit/config": "workspace:*",
+    "elysia": "catalog:",
+    "typescript": "^5"
+  }
+}

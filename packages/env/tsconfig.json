@@ -1,0 +1,3 @@
+{
+  "extends": "@Klarheit/config/tsconfig.base.json"
+}
