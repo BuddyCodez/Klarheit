@@ -46,7 +46,11 @@
   },
   "dependencies": {
     "@Klarheit/env": "workspace:*",
+    "@types/amqplib": "^0.10.8",
+    "amqplib": "^1.0.2",
     "dotenv": "catalog:",
+    "kafkajs": "^2.2.4",
+    "socket.io": "^4.8.3",
     "zod": "catalog:"
   },
   "devDependencies": {
