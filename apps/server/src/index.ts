@@ -10,6 +10,9 @@ import { RPCHandler } from "@orpc/server/fetch";
 import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
 import { Elysia } from "elysia";
 
+import { startAlertWorker } from "./alert-worker";
+import { startKafkaConsumer } from "./consumer";
+
 const rpcHandler = new RPCHandler(appRouter, {
   interceptors: [
     onError((error) => {
@@ -75,4 +78,6 @@ const app = new Elysia()
   .get("/", () => "OK")
   .listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
+    startKafkaConsumer().catch(console.error);
+    startAlertWorker().catch(console.error);
   });
