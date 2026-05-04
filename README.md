@@ -1,113 +1,136 @@
-# Klarheit
+Here’s your README as a clean copy-paste ready Markdown file:
 
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines Next.js, Elysia, ORPC, and more.
+````md
+# 🛡️ Klarheit
+**High-Performance Fintech Fraud Detection & Transaction Streaming**
 
-## Features
+`Klarheit` is a modern, full-stack monorepo designed for real-time financial monitoring. Built with a focus on type-safety, low latency, and cinematic UI, it leverages the **Better-T-Stack** to deliver a robust fraud detection engine.
 
-- **TypeScript** - For type safety and improved developer experience
-- **Next.js** - Full-stack React framework
-- **TailwindCSS** - Utility-first CSS for rapid UI development
-- **Shared UI package** - shadcn/ui primitives live in `packages/ui`
-- **Elysia** - Type-safe, high-performance framework
-- **oRPC** - End-to-end type-safe APIs with OpenAPI integration
-- **Bun** - Runtime environment
-- **Prisma** - TypeScript-first ORM
-- **PostgreSQL** - Database engine
-- **Authentication** - Better-Auth
-- **Biome** - Linting and formatting
-- **Turborepo** - Optimized monorepo build system
+---
 
-## Getting Started
+## ⚡ Tech Stack
 
-First, install the dependencies:
+| Layer | Technology |
+| :--- | :--- |
+| **Runtime** | [Bun](https://bun.sh/) (High-performance JS runtime) |
+| **Frontend** | [Next.js](https://nextjs.org/) (App Router, React) |
+| **Backend** | [ElysiaJS](https://elysiajs.com/) (High-performance web framework) |
+| **API Layer** | [oRPC](https://orpc.org/) (End-to-end type-safety & OpenAPI) |
+| **Database** | PostgreSQL + [Prisma ORM](https://www.prisma.io/) |
+| **Auth** | [Better-Auth](https://better-auth.com/) |
+| **Styling** | TailwindCSS + [Shadcn/UI](https://ui.shadcn.com/) |
+| **Monorepo** | [Turborepo](https://turbo.build/) |
+
+---
+
+## ✨ Key Features
+
+- **Real-time Streaming:** Live transaction monitoring via WebSockets / Socket.io.
+- **Fraud Detection Engine:** High-speed data processing architecture inspired by Kafka/RabbitMQ patterns.
+- **Unified Type-Safety:** Shared types across frontend and backend via oRPC.
+- **Modern Aesthetics:** Minimalist, "Noir" fintech dashboard optimized for clarity and speed.
+- **Monorepo Architecture:** Clean separation of concerns between `apps/web`, `apps/server`, and shared `packages`.
+
+---
+
+## 📂 Project Structure
+
+```text
+Klarheit/
+├── apps/
+│   ├── web/         # Next.js Dashboard UI
+│   └── server/      # Elysia + oRPC Backend Engine
+├── packages/
+│   ├── ui/          # Shared shadcn/ui primitives & global styles
+│   ├── api/         # Core business logic & API definitions
+│   ├── auth/        # Authentication configuration
+│   └── db/          # Prisma schema & PostgreSQL connection
+├── docker-compose.yml # Infrastructure (PostgreSQL, Redis, etc.)
+└── turbo.json       # Build pipeline configuration
+````
+
+---
+
+## 🚀 Getting Started
+
+### 1. Prerequisites
+
+Ensure you have [Bun](https://bun.sh/) installed on your system.
+
+---
+
+### 2. Installation
 
 ```bash
 bun install
 ```
 
-## Database Setup
+---
 
-This project uses PostgreSQL with Prisma.
+### 3. Environment Setup
 
-1. Make sure you have a PostgreSQL database set up.
-2. Update your `apps/server/.env` file with your PostgreSQL connection details.
+Create a `.env` file in both `apps/server/` and `apps/web/`:
 
-3. Apply the schema to your database:
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/klarheit"
+BETTER_AUTH_SECRET="your_secret_here"
+```
+
+---
+
+### 4. Database Initialization
 
 ```bash
 bun run db:push
+bun run db:generate
 ```
 
-Then, run the development server:
+---
+
+### 5. Development
+
+Run the entire stack (Frontend + Backend):
 
 ```bash
 bun run dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in your browser to see the web application.
-The API is running at [http://localhost:3000](http://localhost:3000).
+* Web Dashboard → [http://localhost:3001](http://localhost:3001)
+* API Server → [http://localhost:3000](http://localhost:3000)
 
-## UI Customization
+---
 
-React web apps in this stack share shadcn/ui primitives through `packages/ui`.
+## 🛠️ Development Scripts
 
-- Change design tokens and global styles in `packages/ui/src/styles/globals.css`
-- Update shared primitives in `packages/ui/src/components/*`
-- Adjust shadcn aliases or style config in `packages/ui/components.json` and `apps/web/components.json`
+| Command               | Action                       |
+| :-------------------- | :--------------------------- |
+| `bun run dev`         | Start all apps in watch mode |
+| `bun run build`       | Production build             |
+| `bun run check`       | Lint + format (Biome)        |
+| `bun run db:studio`   | Open Prisma Studio           |
+| `bun run check-types` | TypeScript validation        |
 
-### Add more shared components
+---
 
-Run this from the project root to add more primitives to the shared UI package:
+## 🌐 Deployment
+
+Optimized for **Cloudflare via Alchemy**:
 
 ```bash
-npx shadcn@latest add accordion dialog popover sheet table -c packages/ui
+cd apps/web
+bun run deploy
 ```
 
-Import shared components like this:
+---
 
-```tsx
-import { Button } from "@Klarheit/ui/components/button";
-```
+## 👤 Author
 
-### Add app-specific blocks
+**Udit**
+GitHub: [https://github.com/BuddyCodez](https://github.com/BuddyCodez)
 
-If you want to add app-specific blocks instead of shared primitives, run the shadcn CLI from `apps/web`.
+---
 
-## Deployment (Cloudflare via Alchemy)
-
-- Dev: cd apps/web && bun run alchemy dev
-- Deploy: cd apps/web && bun run deploy
-- Destroy: cd apps/web && bun run destroy
-
-For more details, see the guide on [Deploying to Cloudflare with Alchemy](https://www.better-t-stack.dev/docs/guides/cloudflare-alchemy).
-
-## Git Hooks and Formatting
-
-- Format and lint fix: `bun run check`
-
-## Project Structure
+> *Klarheit: Because financial systems deserve absolute clarity.*
 
 ```
-Klarheit/
-├── apps/
-│   ├── web/         # Frontend application (Next.js)
-│   └── server/      # Backend API (Elysia, ORPC)
-├── packages/
-│   ├── ui/          # Shared shadcn/ui components and styles
-│   ├── api/         # API layer / business logic
-│   ├── auth/        # Authentication configuration & logic
-│   └── db/          # Database schema & queries
 ```
-
-## Available Scripts
-
-- `bun run dev`: Start all applications in development mode
-- `bun run build`: Build all applications
-- `bun run dev:web`: Start only the web application
-- `bun run dev:server`: Start only the server
-- `bun run check-types`: Check TypeScript types across all apps
-- `bun run db:push`: Push schema changes to database
-- `bun run db:generate`: Generate database client/types
-- `bun run db:migrate`: Run database migrations
-- `bun run db:studio`: Open database studio UI
-- `bun run check`: Run Biome formatting and linting
