@@ -1,6 +1,4 @@
-Here’s your README as a clean copy-paste ready Markdown file:
 
-````md
 # 🛡️ Klarheit
 **High-Performance Fintech Fraud Detection & Transaction Streaming**
 
@@ -31,11 +29,10 @@ Here’s your README as a clean copy-paste ready Markdown file:
 - **Modern Aesthetics:** Minimalist, "Noir" fintech dashboard optimized for clarity and speed.
 - **Monorepo Architecture:** Clean separation of concerns between `apps/web`, `apps/server`, and shared `packages`.
 
----
+
 
 ## 📂 Project Structure
 
-```text
 Klarheit/
 ├── apps/
 │   ├── web/         # Next.js Dashboard UI
@@ -47,9 +44,9 @@ Klarheit/
 │   └── db/          # Prisma schema & PostgreSQL connection
 ├── docker-compose.yml # Infrastructure (PostgreSQL, Redis, etc.)
 └── turbo.json       # Build pipeline configuration
-````
 
----
+
+
 
 ## 🚀 Getting Started
 
